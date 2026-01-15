@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription – Agence Matrimoniale Noir & Blanc</title>
+<style>
+body {font-family: Arial,sans-serif;background:#f5f5f5;margin:0;padding:0;}
+.container {max-width:500px;margin:20px auto;background:#fff;padding:25px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+h1{text-align:center;color:#222;margin-bottom:15px;}
+p{font-size:14px;color:#555;margin-bottom:20px;}
+label{display:block;margin-top:15px;font-weight:bold;color:#333;}
+input, select, textarea{width:100%;padding:12px;margin-top:5px;border-radius:6px;border:1px solid #ccc;box-sizing:border-box;font-size:14px;}
+textarea{resize:vertical;}
+.btn{margin-top:15px;width:100%;padding:14px;background:#000;color:#fff;border:none;border-radius:6px;font-size:16px;cursor:pointer;}
+.btn:hover{background:#333;}
+.btn-messenger{background:#1877F2;margin-top:10px;}
+.btn-messenger:hover{background:#1356b0;}
+.note{margin-top:20px;font-size:13px;color:#777;}
+.lang{text-align:center;margin-bottom:15px;}
+.lang button{margin:5px;padding:6px 12px;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="lang">
+  <button onclick="setLang('fr')">🇫🇷 Français</button>
+  <button onclick="setLang('en')">🇬🇧 English</button>
+</div>
+
+<h1 id="title">Inscription officielle</h1>
+<p id="desc">
+Cette inscription est destinée aux <strong>femmes et hommes célibataires sérieux</strong>.
+</p>
+
+<form id="form">
+
+<label id="l_genre">Vous êtes :</label>
+<select id="genre" required>
+  <option value="">-- Sélectionnez --</option>
+  <option>Femme</option>
+  <option>Homme</option>
+</select>
+
+<label id="l_nom">Nom et prénom</label>
+<input id="nom" placeholder="Votre nom complet" required>
+
+<label id="l_age">Âge</label>
+<input id="age" type="number" placeholder="Votre âge" required>
+
+<label id="l_situation">Situation matrimoniale</label>
+<select id="situation" required>
+  <option>Célibataire</option>
+</select>
+
+<label id="l_pays">Pays</label>
+<input id="pays" placeholder="Pays de résidence" required>
+
+<label id="l_ville">Ville</label>
+<input id="ville" placeholder="Ville" required>
+
+<label id="l_profession">Profession / Activité</label>
+<input id="profession" placeholder="Votre activité principale" required>
+
+<label id="l_recherche">Ce que vous recherchez</label>
+<select id="recherche" required>
+  <option>Relation sérieuse</option>
+  <option>Mariage</option>
+</select>
+
+<label id="l_presentation">Présentation personnelle</label>
+<textarea id="presentation" rows="5" placeholder="Présentez-vous sincèrement (valeurs, caractère, attentes...)" required></textarea>
+
+<label id="l_whatsapp">Numéro WhatsApp / Contact</label>
+<input id="whatsapp" placeholder="Ex : +237 6 91 96 55 64">
+
+<button class="btn" type="submit" id="btn">Envoyer mon dossier</button>
+
+<button type="button" class="btn btn-messenger"
+onclick="window.open('https://m.me/agence_matimoniale_noir_&_blanc','_blank')">
+Contacter via Messenger
+</button>
+
+</form>
+
+<p class="note" id="note">
+🔒 Informations strictement confidentielles.
+</p>
+
+</div>
+
+<script>
+const texts = {
+fr: {
+  title:"Inscription officielle",
+  desc:"Cette inscription est destinée aux femmes et hommes célibataires sérieux.",
+  btn:"Envoyer mon dossier"
+},
+en: {
+  title:"Official Registration",
+  desc:"This registration is intended for serious single men and women.",
+  btn:"Submit my application"
+}
+};
+
+function setLang(l){
+  document.getElementById("title").innerText=texts[l].title;
+  document.getElementById("desc").innerText=texts[l].desc;
+  document.getElementById("btn").innerText=texts[l].btn;
+}
+
+document.getElementById("form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  let message =
+    "Nouvelle inscription\n"+
+    "Genre: "+genre.value+"\n"+
+    "Nom: "+nom.value+"\n"+
+    "Âge: "+age.value+"\n"+
+    "Pays: "+pays.value+"\n"+
+    "Ville: "+ville.value+"\n"+
+    "Profession: "+profession.value+"\n"+
+    "Recherche: "+recherche.value+"\n"+
+    "Présentation: "+presentation.value+"\n"+
+    "WhatsApp: "+(whatsapp.value || "Non renseigné");
+
+  if(whatsapp.value.trim() !== ""){
+    window.open(
+      "https://wa.me/237691965564?text="+encodeURIComponent(message),
+      "_blank"
+    );
+  } else {
+    window.location.href =
+      "mailto:agencematrimoniale460@gmail.com"+
+      "?subject=Nouvelle inscription"+
+      "&body="+encodeURIComponent(message);
+  }
+
+  this.style.display = "none";
+  const thanks = document.createElement("p");
+  thanks.style.color="green";
+  thanks.style.fontWeight="bold";
+  thanks.style.textAlign="center";
+  thanks.style.marginTop="20px";
+  thanks.innerText="✅ Merci ! Votre inscription a bien été enregistrée. Vous serez contacté(e) bientôt.";
+  this.parentElement.appendChild(thanks);
+});
+
+setLang('fr');
+</script>
+
+</body>
+</html>
